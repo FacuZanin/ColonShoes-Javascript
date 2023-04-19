@@ -4,12 +4,120 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
     <title>ColonShoes</title>
 </head>
 <body>
-    <p>Calcular el costo de productos seleccionados por el usuario</p>
-
+    <header class="header">
+      
+        <div class="banner">
+          <div class="row">
+            <div class="col-4" id="logo">
+              <a href="../index.html">
+                <img src="archivos\imagenes pagina general\Corona.jpeg" class="rounded float-start" alt="" width="100px" height="100px">
+              </a>
+            </div>
+      
+            <div class="container col-4" id="buscar">
+              <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Ingresar" aria-label="Search" id="cuadroBotonBuscar">
+                <button class="btn btn-outline-dark" type="submit" id="botonBuscar">Buscar</button>
+              </form>
+            </div>
+      
+            <div class="col-4" id="icons">
+              <a href="../pages/registro.html"> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16" id="iconRegistro" alt="Registro">
+                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/> 
+                </svg>
+              </a>
+      
+              <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-suit-heart-fill" viewBox="0 0 16 16" id="iconFavoritos" alt="Favoritos">
+                <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+              </svg>
+              <a href="carrito.html"> 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16" id="iconCarrito" alt="Carrito">
+                      <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                  </svg>
+                </a>  
+              </div> 
+          </div>
+        </div>
     
+      </header>
+      
+      <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-3">
+                <h4>Filtrar</h4>
+                <div class="filter-section">
+                  <h5>Tipo de producto</h5>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="zapatillas" id="chkZapatillas">
+                    <label class="form-check-label" for="chkZapatillas">
+                      Zapatillas
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="indumentaria" id="chkIndumentaria">
+                    <label class="form-check-label" for="chkIndumentaria">
+                      Indumentaria
+                    </label>
+                  </div>
+                </div>
+                <div class="filter-section">
+                  <h5>Género</h5>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="hombre" id="chkHombre">
+                    <label class="form-check-label" for="chkHombre">
+                      Hombre
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="mujer" id="chkMujer">
+                    <label class="form-check-label" for="chkMujer">
+                      Mujer
+                    </label>
+                  </div>
+                </div>
+                <div class="filter-section">
+                  <h5>Marca</h5>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Adidas" id="chkAdidas">
+                    <label class="form-check-label" for="chkAdidas">
+                      Adidas
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Jordan" id="chkJordan">
+                    <label class="form-check-label" for="chkJordan">
+                      Jordan
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Nike" id="chkNike">
+                    <label class="form-check-label" for="chkNike">
+                      Nike
+                    </label>
+                  </div>
+                </div>
+                <div class="filter-section">
+                    <h5>Precio</h5>
+                    <div class="d-flex justify-content-between"><p>Min</p><p>Max</p></div>
+                    <input type="range" class="form-range" min="20000" max="120000" step="1000" value="120000" id="rangePrecio">
+                    <span id="rangePrecioValor">120,000</span>
+                  </div>
+              </div>
+              
+          <div class="col-lg-9">
+            <div class="row" id="productGrid">
+              <!-- Las tarjetas de productos se generan aquí -->
+            </div>
+          </div>
+        </div>
+      </div>
     <script src="/index.js"></script>
 </body>
 </html>
