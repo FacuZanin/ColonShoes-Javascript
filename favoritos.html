@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Producto Zapatilla</title>
+</head>
+<body>
+  <h1>Tus Productos Favoritos</h1>
+  <div id="productos">
+
+  </div>
+  
+  <script>
+    // Obtener los productos guardados como favoritos en el localStorage
+    const favoritos = JSON.parse(localStorage.getItem('favoritos'));
+
+    // Obtener el elemento donde se van a mostrar los productos
+    const productosDiv = document.getElementById('productos');
+
+    // Verificar si hay productos favoritos
+    if (favoritos && favoritos.length > 0) {
+      // Recorrer los productos favoritos y mostrar su información
+      favoritos.forEach(producto => {
+        // Crear un elemento div para mostrar la información del producto
+        const productoDiv = document.createElement('div');
+
+        // Agregar la imagen del producto
+        const imagen = document.createElement('img');
+        imagen.src = producto.imagen;
+        productoDiv.appendChild(imagen);
+
+        // Agregar el nombre del producto
+        const id = document.createElement('h2');
+        id.textContent = producto.id;
+        productoDiv.appendChild(id);
+
+        // Agregar el precio del producto
+        const precio = document.createElement('p');
+        precio.textContent = `$${producto.precio}`;
+        productoDiv.appendChild(precio);
+
+        // Agregar el producto al contenedor de productos
+        productosDiv.appendChild(productoDiv);
+      });
+    } else {
+      // Mostrar un mensaje si no hay productos favoritos guardados
+      const mensaje = document.createElement('p');
+      mensaje.textContent = 'No tienes productos favoritos';
+      productosDiv.appendChild(mensaje);
+    }
+  </script>
+</body>
+
+</html>

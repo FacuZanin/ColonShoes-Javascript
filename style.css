@@ -132,6 +132,7 @@ input[type="submit"]:hover {
   .filter-section p {
     margin-top: 20px;
   }
+
   .heart-icon{
     border: none;
     background: none;
@@ -141,4 +142,23 @@ input[type="submit"]:hover {
   .heart-icon:hover svg path {
     fill: red;
   }
+  
+  button {
+    border: none;
+    background-color: transparent;
+    color: none;
+  }
+  .card-body h4 {
+    font-family: 'Roboto', sans-serif;
+    color: black;
+  }
+
+
+  a.product-link {
+    color: black; /* Cambiar el color del enlace a negro */
+    text-decoration: none; /* Quitar el subrayado */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 17px;
+  }
+
   

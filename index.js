@@ -18,21 +18,55 @@ const chkAdidas = document.getElementById("chkAdidas");
 const chkJordan = document.getElementById("chkJordan");
 const chkNike = document.getElementById("chkNike");
 const rangePrecio = document.getElementById("rangePrecio");
-const productGridNuevo = document.getElementById("productGrid");
+const heartIcons = document.querySelectorAll(".heart-icon");
 
 // Escuchar los cambios en los checkboxes y en el rango de precios
-chkZapatillas.addEventListener("change", filtrar);
-chkIndumentaria.addEventListener("change", filtrar);
-chkHombre.addEventListener("change", filtrar);
-chkMujer.addEventListener("change", filtrar);
-chkAdidas.addEventListener("change", filtrar);
-chkJordan.addEventListener("change", filtrar);
-chkNike.addEventListener("change", filtrar);
-rangePrecio.addEventListener("input", filtrar);
 
-// Función de filtrado
-function filtrar() {
-  // Obtener los valores seleccionados
+chkZapatillas.addEventListener("change", () => {
+  generarGrid(filtrarProductos());
+});
+
+chkIndumentaria.addEventListener("change", () => {
+  generarGrid(filtrarProductos());
+});
+
+chkHombre.addEventListener("change", () => {
+  generarGrid(filtrarProductos());
+});
+
+chkMujer.addEventListener("change", () => {
+  generarGrid(filtrarProductos());
+});
+
+chkAdidas.addEventListener("change", () => {
+  generarGrid(filtrarProductos());
+});
+
+chkJordan.addEventListener("change", () => {
+  generarGrid(filtrarProductos());
+});
+
+chkNike.addEventListener("change", () => {
+  generarGrid(filtrarProductos());
+});
+
+rangePrecio.addEventListener("input", () => {
+  generarGrid(filtrarProductos());
+});
+
+heartIcons.forEach((icon) => {
+  icon.addEventListener("click", () => {
+    agregarFavorito(icon, favoritos);
+  });
+});
+
+const rangePrecioValor = document.getElementById('rangePrecioValor');
+rangePrecio.addEventListener('input', () => {
+  rangePrecioValor.textContent = rangePrecio.value.toLocaleString();
+});
+
+// Función para obtener los valores seleccionados
+function obtenerFiltro() {
   const filtro = {
     tipo: [],
     genero: [],
@@ -62,6 +96,13 @@ function filtrar() {
     filtro.marca.push("Nike");
   }
 
+  return filtro;
+}
+
+  // Función para filtrar los productos según los valores seleccionados
+function filtrarProductos() {
+  const filtro = obtenerFiltro();
+
   // Filtrar los objetos según los valores seleccionados
   const productosFiltrados = zapatillas.filter((producto) => {
     let cumpleFiltro = true;
@@ -88,18 +129,20 @@ function filtrar() {
     return cumpleFiltro;
   });
 
-  //  Generar la tarjeta con los productos
-  productGridNuevo.innerHTML = "";
-  productosFiltrados.forEach((producto) => {
-    const card = `
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="${producto.imagen}" alt=""></a>
-          <div class="card-body">
-            <p class="card-title">
-              <a href="#" class="product-link" data-id="${producto.id}">${producto.nombre}</a>
-            </p>
-            <div class="d-flex justify-content-between"><h4>$${producto.precio}</h4>
+  return productosFiltrados;
+}
+
+// Función para generar la tarjeta de producto en el grid
+function generarTarjeta(producto) {
+  const card = `
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card h-100 border-0">
+        <button><a class="product-link" data-id="${producto.id}"><img class="card-img-top" src="${producto.imagen}" alt=""></a></button>
+        <div class="card-body">
+          <p class="card-title">
+            <button><a class="product-link" data-id="${producto.id}">${producto.nombre}</a></button>
+          </p>
+          <div class="d-flex justify-content-between"><h4>$${producto.precio}</h4>
             <div class="heart-icon" data-id="${producto.id}">
               <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                 <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
@@ -108,90 +151,19 @@ function filtrar() {
           </div>
         </div>
       </div>
-    `;
-    productGrid.innerHTML += card;
-  });
-  
-  // Obtener todos los enlaces de productos y añadir un event listener
-  const productLinks = document.querySelectorAll('.product-link');
-  productLinks.forEach(link => {
-    link.addEventListener('click', (event) => {
-      event.preventDefault();
-      const id = link.getAttribute('data-id');
-      window.location.href = `producto-${id}.html`;
-    });
-  });
-  
-  // Obtener todos los iconos de corazón y añadir un event listener
-  const heartIcons = document.querySelectorAll('.heart-icon');
-
-    // Agregar evento click a cada corazón
-    heartIcons.forEach(icon => {
-    icon.addEventListener('click', (event) => {
-    event.preventDefault();
-    const id = icon.getAttribute('data-id');
-    let favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-
-    // Si el producto ya está en la lista de favoritos, removerlo y cambiar color del corazón a su estado original
-    if (!favoritos.includes(id)) {
-      favoritos.push(id);
-      localStorage.setItem('favoritos', JSON.stringify(favoritos));
-      icon.classList.replace('heart-icon', 'heart-icon--active');
-      icon.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="red" class="bi bi-heart-fill" viewBox="0 0 16 16" style="fill: red;">
-          <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-        </svg>
-      `;
-    } else {
-      const index = favoritos.indexOf(id);
-      favoritos.splice(index, 1);
-      localStorage.setItem('favoritos', JSON.stringify(favoritos));
-      icon.classList.replace('<bottonheart-icon--active', 'heart-icon');
-      icon.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-        </svg>
-      `;
-    }
-  });
-});
-
-// Mantener los elementos guardados en favoritos aun refrescando la pagina
-window.addEventListener('load', () => {
-  const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-  const heartIcons = document.querySelectorAll('.heart-icon');
-  heartIcons.forEach(icon => {
-    const id = icon.getAttribute('data-id');
-    if (favoritos.includes(id)) {
-      icon.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16" style="fill: red;">
-          <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
-        </svg>
-      `;
-      icon.classList.add('heart-icon--active');
-    }
-  });
-});
-
-
-// Agregar evento DOMContentLoaded para verificar si los productos están en la lista de favoritos y cambiar el color del corazón si es necesario
-document.addEventListener('DOMContentLoaded', () => {
-  const favoritos = JSON.parse(localStorage.getItem('favoritos')) || [];
-  favoritos.forEach((favorito) => {
-    const icon = document.querySelector(`.heart-icon[data-id="${favorito}"]`);
-    icon.classList.add('heart-icon--active');
-  });
-});
-
-// Muestra el precio actual de lo que vale el en el filtro
-const rangePrecioValor = document.getElementById('rangePrecioValor');
-rangePrecio.addEventListener('input', () => {
-  rangePrecioValor.textContent = rangePrecio.value.toLocaleString();
-});
-
-
+    </div>
+  `;
+  return card;
 }
 
+// Función para generar el grid de productos
+function generarGrid(zapatillas) {
+  const productGrid = document.getElementById("productGrid");
+  productGrid.innerHTML = "";
+  zapatillas.forEach((producto) => {
+    const card = generarTarjeta(producto);
+    productGrid.innerHTML += card;
+  });
+}
 
-// Mostrar todos los productos al cargar la página
-filtrar();
+generarGrid(filtrarProductos());
