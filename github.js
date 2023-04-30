@@ -1,14 +1,3 @@
-const zapatillas = [
-  { id:"1-Ultraboost", tipo:"Zapatillas", genero:"Hombre", nombre: "Ultraboost", marca: "Adidas", precio: 52500, imagen:"archivos/imagenes de zapatillas/Zapatillas Adidas Ultraboost 2021.jpeg"},
-  { id:"2-HaveANikeDay", tipo:"Zapatillas", genero:"Hombre", nombre: "Have a Nike Day", marca: "Nike", precio: 42000, imagen:"archivos/imagenes de zapatillas/Zapatillas AF1 Have a Nike Day.jpeg" },
-  { id:"3-1world1People", tipo:"Zapatillas", genero:"Hombre", nombre: "Kyrie Irving 1 World 1 People", marca: "Nike", precio: 105000, imagen:"archivos/imagenes de zapatillas/Zapatillas Kyrie Irving 1 World 1 People.jpeg" },
-  { id:"4-Blazzer77", tipo:"Zapatillas", genero:"Hombre", nombre: "Blazzer 77", marca: "Nike", precio: 77000, imagen:"archivos/imagenes de zapatillas/Zapatillas Nike Blazer 77.jpeg" },
-  { id:"5-CelestineBlue", tipo:"Zapatillas", genero:"Mujer", nombre: "Celestine Blue", marca: "Jordan", precio: 69000, imagen:"archivos/imagenes de zapatillas/Zapatillas Nike Jordan Air Zoom Celestine Blue.jpeg" },
-  { id:"6-Halloween", tipo:"Zapatillas", genero:"Hombre", nombre: "SB Dunk Low Halloween", marca: "Nike", precio: 59800, imagen:"archivos/imagenes de zapatillas/Zapatillas Nike SB Dunk Low Halloween.jpeg" },
-  { id:"7-Vapormax", tipo:"Zapatillas", genero:"Hombre", nombre: "Vapormax", marca: "Nike", precio: 55000, imagen:"archivos/imagenes de zapatillas/Zapatillas Nike Vapormax.jpeg" }
-];
-
-// CODIGO DEL FILTRO !!!!!!
 // Obtener los elementos HTML relevantes
 const chkZapatillas = document.getElementById("chkZapatillas");
 const chkIndumentaria = document.getElementById("chkIndumentaria");
@@ -19,6 +8,7 @@ const chkJordan = document.getElementById("chkJordan");
 const chkNike = document.getElementById("chkNike");
 const rangePrecio = document.getElementById("rangePrecio");
 const heartIcons = document.querySelectorAll(".heart-icon");
+
 
 // Escuchar los cambios en los checkboxes y en el rango de precios
 
@@ -60,10 +50,9 @@ heartIcons.forEach((icon) => {
   });
 });
 
-const rangePrecioValor = document.getElementById('rangePrecioValor');
-rangePrecio.addEventListener('input', () => {
-  rangePrecioValor.textContent = rangePrecio.value.toLocaleString();
-});
+
+
+
 
 // Función para obtener los valores seleccionados
 function obtenerFiltro() {
@@ -99,40 +88,46 @@ function obtenerFiltro() {
   return filtro;
 }
 
-  // Función para filtrar los productos según los valores seleccionados
+// Función para filtrar los productos según los valores seleccionados
 function filtrarProductos() {
   const filtro = obtenerFiltro();
 
-  // Filtrar los objetos según los valores seleccionados
-  const productosFiltrados = zapatillas.filter((producto) => {
-    let cumpleFiltro = true;
+  fetch("/data.json")
+    .then(response => response.json())
+    .then(data => {
+      const productosFiltrados = data.productos.filter((producto) => {
+        let cumpleFiltro = true;
 
-    if (filtro.tipo.length > 0 && !filtro.tipo.includes(producto.tipo)) {
-      cumpleFiltro = false;
-    }
-    if (
-      filtro.genero.length > 0 &&
-      !filtro.genero.includes(producto.genero)
-    ) {
-      cumpleFiltro = false;
-    }
-    if (
-      filtro.marca.length > 0 &&
-      !filtro.marca.includes(producto.marca)
-    ) {
-      cumpleFiltro = false;
-    }
-    if (producto.precio > filtro.precioMax) {
-      cumpleFiltro = false;
-    }
+        if (filtro.tipo.length > 0 && !filtro.tipo.includes(producto.tipo)) {
+          cumpleFiltro = false;
+        }
+        if (
+          filtro.genero.length > 0 &&
+          !filtro.genero.includes(producto.genero)
+        ) {
+          cumpleFiltro = false;
+        }
+        if (
+          filtro.marca.length > 0 &&
+          !filtro.marca.includes(producto.marca)
+        ) {
+          cumpleFiltro = false;
+        }
+        if (producto.precio > filtro.precioMax) {
+          cumpleFiltro = false;
+        }
+    
+        return cumpleFiltro;
+      });
 
-    return cumpleFiltro;
-  });
-
-  return productosFiltrados;
+      generarGrid(productosFiltrados);
+    })
+    .catch(error => {
+      console.error(error);
+    });
 }
 
-// Función para generar la tarjeta de producto en el grid
+
 function generarTarjeta(producto) {
   const card = `
     <div class="col-lg-4 col-md-6 mb-4">
@@ -156,11 +151,10 @@ function generarTarjeta(producto) {
   return card;
 }
 
-// Función para generar el grid de productos
-function generarGrid(zapatillas) {
+function generarGrid(productos) {
   const productGrid = document.getElementById("productGrid");
   productGrid.innerHTML = "";
-  zapatillas.forEach((producto) => {
+  productos.forEach((producto) => {
     const card = generarTarjeta(producto);
     productGrid.innerHTML += card;
   });
