@@ -1,4 +1,16 @@
-/* Estilos para el formulario de carga de productos */
+/* Ocultar el scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+  background-color: transparent;
+}
+
+/* Agregar desplazamiento en los elementos necesarios */
+body {
+  overflow-y: scroll;
+}
+
+
+/*   formulario   */
 form {
     display: flex;
     flex-direction: column;
@@ -52,46 +64,14 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #0062cc;
+    background-color: black;
 }
-
-.product-card {
-    border: 1px solid #e3e3e3;
-    border-radius: 10px;
-    margin: 20px 0;
-    padding: 20px;
-    height: 350px;
-  }
-  
-  .product-card:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .product-card img {
-    height: 200px;
-    object-fit: cover;
-    margin-bottom: 20px;
-  }
-  
-  .product-card h5 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
-  
-  .product-card p {
-    margin-bottom: 10px;
-  }
-  
-  .product-card .price {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #db3069;
-  }
-
+/*------------------*/
   
 
+/*----NAVBAR----*/
   .banner {
-    background-color: #F8F8F8;
+    background-color: #000000;
     padding: 10px;
     display: flex;
     justify-content: center;
@@ -123,26 +103,29 @@ input[type="submit"]:hover {
     display: flex;
     align-items: center;
   }
-  
+
+  .banner #icons a {
+  color: #ffbd59;
+  }
+
   .banner #icons svg {
     margin-right: 20px;
     cursor: pointer;
   }
 
+
+/*------------------*/
+
+/*--- FILTRO ---*/
+
   .filter-section p {
-    margin-top: 20px;
+    margin-top: 0px;
   }
 
-  .heart-icon{
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
-  
-  .heart-icon:hover svg path {
-    fill: red;
-  }
-  
+/*------------------*/
+
+  /* BOTONES DE LA TARJETAS */
+
   button {
     border: none;
     background-color: transparent;
@@ -153,12 +136,9 @@ input[type="submit"]:hover {
     color: black;
   }
 
-
   a.product-link {
     color: black; /* Cambiar el color del enlace a negro */
     text-decoration: none; /* Quitar el subrayado */
     font-family: 'Montserrat', sans-serif;
     font-size: 17px;
   }
-
-  

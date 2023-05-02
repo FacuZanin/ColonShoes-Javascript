@@ -53,21 +53,76 @@
     
       </header>
       
-  <h1>Tus Productos Favoritos</h1>
-  <div class="container my-5">
-    <div class="row">
-      <div class="col-lg-1"></div>
-      <div class="col-lg-10 mx-auto">
-        <div class="row" id="favoritos">
-          <!-- Las tarjetas de productos se generan aquí -->
+      <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-3">
+                <h4>Filtrar</h4>
+                <div class="filter-section">
+                  <h5>Tipo de producto</h5>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="zapatillas" id="chkZapatillas">
+                    <label class="form-check-label" for="chkZapatillas">
+                      Zapatillas
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="indumentaria" id="chkIndumentaria">
+                    <label class="form-check-label" for="chkIndumentaria">
+                      Indumentaria
+                    </label>
+                  </div>
+                </div>
+                <div class="filter-section">
+                  <h5>Género</h5>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="hombre" id="chkHombre">
+                    <label class="form-check-label" for="chkHombre">
+                      Hombre
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="mujer" id="chkMujer">
+                    <label class="form-check-label" for="chkMujer">
+                      Mujer
+                    </label>
+                  </div>
+                </div>
+                <div class="filter-section">
+                  <h5>Marca</h5>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Adidas" id="chkAdidas">
+                    <label class="form-check-label" for="chkAdidas">
+                      Adidas
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Jordan" id="chkJordan">
+                    <label class="form-check-label" for="chkJordan">
+                      Jordan
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Nike" id="chkNike">
+                    <label class="form-check-label" for="chkNike">
+                      Nike
+                    </label>
+                  </div>
+                </div>
+                <div class="filter-section">
+                    <h5>Precio</h5>
+                    <div class="d-flex justify-content-between"><p>Min</p><p>Max</p></div>
+                    <input type="range" class="form-range" min="20000" max="120000" step="1000" value="120000" id="rangePrecio">
+                    <span id="rangePrecioValor">120,000</span>
+                  </div>
+              </div>
+              
+          <div class="col-lg-9">
+            <div class="row" id="productGrid">
+              <!-- Las tarjetas de productos se generan aquí -->
+            </div>
+          </div>
         </div>
-        <div class="col-lg-1"></div>        
       </div>
-    </div>
-  </div>
-  
-    
-  <script src="/favoritos.js"></script>
+    <script src="/pruebaProductos.js"></script>
 </body>
-
 </html>
