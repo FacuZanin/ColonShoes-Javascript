@@ -9,6 +9,7 @@ const chkNike = document.getElementById("chkNike");
 const rangePrecio = document.getElementById("rangePrecio");
 const productGrid = document.getElementById("productGrid");
 
+
 chkZapatillas.addEventListener("change", () => {
   filtrarProductos();
 });
@@ -49,7 +50,6 @@ function obtenerFiltro() {
     marca: [],
     precioMax: rangePrecio.value
   };
-
   if (chkZapatillas.checked) {
     filtro.tipo.push("Zapatillas");
   }
@@ -73,6 +73,23 @@ function obtenerFiltro() {
   }
 
   return filtro;
+}
+
+function guardarFavorito(producto) {
+  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+  if (!favoritos.includes(producto)) {
+    favoritos.push(producto);
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  }
+}
+
+function eliminarFavorito(producto) {
+  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+  let index = favoritos.findIndex(p => p.id === producto.id);
+  if (index !== -1) {
+    favoritos.splice(index, 1);
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  }
 }
 
 function filtrarProductos() {
@@ -128,22 +145,39 @@ const carrito = `
 // Usar constante en la tarjeta
 function generarTarjeta(producto) {
   const card = `
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100 border-0">
-      <button><a class="product-link" data-id="${producto.id}"><img class="card-img-top" src="${producto.imagen}" alt=""></a></button>
-        <div class="card-body">
-          <p class="card-title">
-            <button><a class="product-link" data-id="${producto.id}">${producto.nombre}</a></button>
-          </p>
-          <div class="d-flex justify-content-between"><h4>$${producto.precio}</h4>
-          <div>
-            <button>
-              <div class="heart-icon" data-id="${producto.id}">
-                ${heartIcon}
-              </div>
-            </button>
+  <div class="col-lg-4 col-md-6 mb-4">
+  <div class="card h-100 border-0">
+    <button>
+      <a class="product-link" data-id="${producto.id}">
+        <img class="card-img-top" src="${producto.imagen}" alt="">
+      </a>
+    </button>
+    <div class="card-body">
+      <p class="card-title">
+        <button>
+          <a class="product-link" data-id="${producto.id}">
+            ${producto.nombre}
+          </a>
+        </button>
+      </p>
+      <div class="d-flex justify-content-between">
+        <h4>$${producto.precio}</h4>
+        <div>
+          <button>
+            <div class="heart-icon" data-id="${producto.id}">
+              ${heartIcon}
+            </div>
+          </button>
+          <button>
+            <div class="cart-icon" data-id="${producto.id}">
+              ${carrito}
+            </div>
+          </button>
+        </div>
       </div>
     </div>
+  </div>
+</div>
   `;
   return card;
 }
@@ -155,72 +189,58 @@ function generarGrid(productos) {
     const card = generarTarjeta(producto);
     productGrid.innerHTML += card;
   });
-
-  // Agregamos el evento click a cada ícono de corazón
   const heartIcons = document.querySelectorAll(".heart-icon");
   heartIcons.forEach((icon) => {
     icon.addEventListener("click", (event) => {
       event.preventDefault();
       const id = icon.getAttribute("data-id");
       let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-      // Buscamos el objeto del producto por su id
       const producto = productos.find((p) => p.id === id);
-
-      if (producto && !favoritos.includes(producto)) {
-        // Agregamos el objeto completo a la lista de favoritos
+      const index = favoritos.findIndex((p) => p.id === id);
+      if (producto && index === -1) {
         favoritos.push(producto);
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        icon.classList.add("heart-icon--active");
+      } else if (producto && index !== -1) {
+        favoritos.splice(index, 1);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        icon.classList.remove("heart-icon--active");
       }
-
-      icon.classList.add("heart-icon--active");
     });
-
-    // Verificamos si el producto ya fue agregado a favoritos y le agregamos la clase heart-icon--active
     const id = icon.getAttribute("data-id");
     let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-    // Buscamos el objeto del producto por su id
     const producto = productos.find((p) => p.id === id);
-
-    if (producto && favoritos.includes(producto)) {
+    if (producto && favoritos.findIndex((p) => p.id === id) !== -1) {
       icon.classList.add("heart-icon--active");
     }
   });
+  const cartIcons = document.querySelectorAll(".cart-icon");
+  cartIcons.forEach((icon) => {
+    icon.addEventListener("click", (event) => {
+      event.preventDefault();
+      const id = icon.getAttribute("data-id");
+      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      const producto = productos.find((p) => p.id === id);
+      const index = carrito.findIndex((p) => p.id === id);
+      if (producto && index === -1) {
+        carrito.push(producto);
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        icon.classList.add("cart-icon--active");
+      } else if (producto && index !== -1) {
+        carrito.splice(index, 1);
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+        icon.classList.remove("cart-icon--active");
+      }
+    });
+    const id = icon.getAttribute("data-id");
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    const producto = productos.find((p) => p.id === id);
+    if (producto && carrito.findIndex((p) => p.id === id) !== -1) {
+      icon.classList.add("cart-icon--active");
+    }
+  });
+
 }
 
   
 filtrarProductos();
-
-
-
-
-
-
-
-/*
-function generarTarjeta(producto) {
-  const card = `
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card h-100 border-0">
-        <button><a class="product-link" data-id="${producto.id}"><img class="card-img-top" src="${producto.imagen}" alt=""></a></button>
-        <div class="card-body">
-          <p class="card-title">
-            <button><a class="product-link" data-id="${producto.id}">${producto.nombre}</a></button>
-          </p>
-          <div class="d-flex justify-content-between"><h4>$${producto.precio}</h4>
-          <div>
-            <class="heart-icon" data-id="${producto.id}">
-              ${heartIcon}
-            </class=>
-            <class="cart-icon" data-id="${producto.id}">
-            ${carrito}
-          </class=>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  return card;
-}
-*/
