@@ -98,7 +98,7 @@ function generarGrid(productos) {
     const card = generarTarjeta(producto);
     productGrid.innerHTML += card;
   });
-  const heartIcons = document.querySelectorAll(".cart-icon");
+  const heartIcons = document.querySelectorAll(".heart-icon");
   heartIcons.forEach((icon) => {
     icon.addEventListener("click", (event) => {
       event.preventDefault();
@@ -109,18 +109,18 @@ function generarGrid(productos) {
       if (producto && index === -1) {
         favoritos.push(producto);
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
-        icon.classList.add("cart-icon--active");
+        icon.classList.replace(icon.innerHTML = heartIcon, icon.innerHTML = heartIconFill);
       } else if (producto && index !== -1) {
         favoritos.splice(index, 1);
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
-        icon.classList.remove("cart-icon--active");
+        icon.classList.replace(icon.innerHTML = heartIconFill, icon.innerHTML = heartIcon);
       }
     });
     const id = icon.getAttribute("data-id");
     let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
     const producto = productos.find((p) => p.id === id);
     if (producto && favoritos.findIndex((p) => p.id === id) !== -1) {
-      icon.classList.add("cart-icon--active");
+      icon.classList.replace(icon.innerHTML = heartIcon, icon.innerHTML = heartIconFill);
     }
   });
 }
