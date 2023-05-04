@@ -1,4 +1,4 @@
-const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+const carrito = JSON.parse(localStorage.getItem('carritos')) || [];
 const carritoDiv = document.getElementById('carritoDiv');
 
 function generarTarjeta(producto, index) {
