@@ -35,6 +35,34 @@ function generarGrid(productos) {
   productGridHTML += '</div>';
   carritoDiv.innerHTML = productGridHTML;
 }
+// Obtener el array de carritos del localStorage
+let carritos = JSON.parse(localStorage.getItem('carritos'));
+
+// Calcular el subtotal sumando los precios de cada objeto en el array de carritos
+let subtotal = 0;
+for (let i = 0; i < carritos.length; i++) {
+    subtotal += carritos[i].precio;
+}
+
+// Agregar el subtotal a la tarjeta
+let preciosElement = document.querySelector('.precios');
+let subtotalElement = document.createElement('td');
+subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+preciosElement.appendChild(subtotalElement);
+
+// Verificar si el subtotal es mayor a 30000 y agregar el texto de envío gratis si es necesario
+let envioElement = document.querySelector('.envio');
+if (subtotal > 30000) {
+    let envioGratisElement = document.createElement('td');
+    envioGratisElement.textContent = 'Envío gratis';
+    envioElement.appendChild(envioGratisElement);
+}
+
+// Calcular el total y agregarlo a la tarjeta
+let total = subtotal; // Asumiendo que el costo de envío es $5.00
+let totalElement = document.querySelector('.total');
+let totalTdElement = totalElement.querySelector('td');
+totalTdElement.textContent = `$${total.toFixed(2)}`;
 
 generarGrid(carrito);
 

@@ -243,33 +243,3 @@ function generarGrid(productos) {
 
   
 filtrarProductos();
-
-
-/*
-  
-  const cartIcons = document.querySelectorAll(".cart-icon");
-  cartIcons.forEach((icon) => {
-    icon.addEventListener("click", (event) => {
-      event.preventDefault();
-      const id = icon.getAttribute("data-id");
-      let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-      const producto = productos.find((p) => p.id === id);
-      const index = carrito.findIndex((p) => p.id === id);
-      if (producto && index === -1) {
-        carrito.push(producto);
-        localStorage.setItem("carrito", JSON.stringify(carrito));
-        icon.classList.replace(icon.innerHTML = carrito, icon.innerHTML = carritoLleno);
-      } else if (producto && index !== -1) {
-        carrito.splice(index, 1);
-        localStorage.setItem("carrito", JSON.stringify(carrito));
-        icon.classList.replace(icon.innerHTML = carritoLleno, icon.innerHTML = carrito);
-      }
-    });
-    const id = icon.getAttribute("data-id");
-    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-    const producto = productos.find((p) => p.id === id);
-    if (producto && carrito.findIndex((p) => p.id === id) !== -1) {
-      icon.classList.replace(icon.innerHTML = carrito, icon.innerHTML = carritoLleno);
-    }
-  });
-  */
