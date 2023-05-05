@@ -42,7 +42,7 @@ carritoDiv.addEventListener('click', (event) => {
   if (event.target.classList.contains('btn-danger')) {
     const index = event.target.getAttribute('data-index');
     const nuevoCarrito = carrito.filter((producto, i) => i !== Number(index));
-    localStorage.setItem('carrito', JSON.stringify(nuevoCarrito));
+    localStorage.setItem('carritos', JSON.stringify(nuevoCarrito));
     location.reload();
   }
 });

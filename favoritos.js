@@ -26,12 +26,12 @@ function generarTarjeta(producto) {
             <div class="d-flex justify-content-between">
               <h4>$${producto.precio}</h4>
             <div>
-            <button><class="heart-icon" data-id="${producto.id}">
-                ${heartIcon}
-            </class=></button>
-            <button><class="cart-icon" data-id="${producto.id}">
-                ${carrito}
-          </class=></button>
+            <button class="heart-icon" data-id="${producto.id}">
+            ${heartIcon}
+            </button>
+            <button class="cart-icon" data-id="${producto.id}">
+            ${carrito}
+            </button>
           </div>
           </div>
           </div>
@@ -71,6 +71,7 @@ function generarGrid(productos) {
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
             const card = icon.closest(".card");
             card.parentNode.removeChild(card);
+            location.reload();
           }
         }
         
