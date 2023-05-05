@@ -40,7 +40,7 @@ function generarEnvio(subtotal) {
   const envioTD = document.querySelector('.envio');
   let envio = 0;
   if (typeof subtotal === 'number' && subtotal > 30000) {
-    envioTD.insertAdjacentHTML('beforeend', '   Envío gratis');
+    envioTD.insertAdjacentHTML('beforeend', ':   Envío gratis');
   } else {
     envio = 2500;
     envioTD.insertAdjacentHTML('beforeend', `   $ ${envio.toLocaleString()}`);

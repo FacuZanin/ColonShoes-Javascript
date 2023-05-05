@@ -8,7 +8,7 @@ const chkJordan = document.getElementById("chkJordan");
 const chkNike = document.getElementById("chkNike");
 const rangePrecio = document.getElementById("rangePrecio");
 const productGrid = document.getElementById("productGrid");
-
+const rangePrecioValor = document.getElementById("rangePrecioValor")
 
 chkZapatillas.addEventListener("change", () => {
   filtrarProductos();
@@ -240,6 +240,9 @@ function generarGrid(productos) {
   
 }
 
+rangePrecio.addEventListener('input', () => {
+  rangePrecioValor.textContent = rangePrecio.value.toLocaleString();
+});
 
   
 filtrarProductos();
