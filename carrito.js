@@ -26,6 +26,34 @@ function generarTarjeta(producto, index) {
   return card;
 }
 
+function generarSubtotal(carritos) {
+  let subtotal = 0;
+  for (let i = 0; i < carritos.length; i++) {
+    subtotal += carritos[i].precio;
+  }
+  const subtotalTD = document.querySelector('.subtotal');
+  subtotalTD.insertAdjacentHTML('beforeend', `   $  ${subtotal.toLocaleString()}`);
+  return subtotal; // Devolver el valor calculado
+}
+
+function generarEnvio(subtotal) {
+  const envioTD = document.querySelector('.envio');
+  let envio = 0;
+  if (typeof subtotal === 'number' && subtotal > 30000) {
+    envioTD.insertAdjacentHTML('beforeend', '   Envío gratis');
+  } else {
+    envio = 2500;
+    envioTD.insertAdjacentHTML('beforeend', `   $ ${envio.toLocaleString()}`);
+  }
+  return envio; // Devolver el valor calculado
+}
+
+function generarTotal(subtotal, envio) {
+  const total = subtotal + envio;
+  const totalTD = document.querySelector('.total');
+  totalTD.insertAdjacentHTML('beforeend', `   $  ${total.toLocaleString()}`);
+}
+
 function generarGrid(productos) {
   let productGridHTML = '<div class="row">';
   productos.forEach((producto, index) => {
@@ -34,7 +62,28 @@ function generarGrid(productos) {
   });
   productGridHTML += '</div>';
   carritoDiv.innerHTML = productGridHTML;
+
+  const carritos = JSON.parse(localStorage.getItem('carritos'));
+  const subtotal = generarSubtotal(carritos);
+  const envio = generarEnvio(subtotal);
+  generarTotal(subtotal, envio);
 }
+
+generarGrid(carrito);
+
+
+
+
+carritoDiv.addEventListener('click', (event) => {
+  if (event.target.classList.contains('btn-danger')) {
+    const index = event.target.getAttribute('data-index');
+    const nuevoCarrito = carrito.filter((producto, i) => i !== Number(index));
+    localStorage.setItem('carritos', JSON.stringify(nuevoCarrito));
+    location.reload();
+  }
+});
+
+/*
 // Obtener el array de carritos del localStorage
 let carritos = JSON.parse(localStorage.getItem('carritos'));
 
@@ -63,14 +112,4 @@ let total = subtotal; // Asumiendo que el costo de envío es $5.00
 let totalElement = document.querySelector('.total');
 let totalTdElement = totalElement.querySelector('td');
 totalTdElement.textContent = `$${total.toFixed(2)}`;
-
-generarGrid(carrito);
-
-carritoDiv.addEventListener('click', (event) => {
-  if (event.target.classList.contains('btn-danger')) {
-    const index = event.target.getAttribute('data-index');
-    const nuevoCarrito = carrito.filter((producto, i) => i !== Number(index));
-    localStorage.setItem('carritos', JSON.stringify(nuevoCarrito));
-    location.reload();
-  }
-});
+*/
