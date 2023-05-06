@@ -71,17 +71,16 @@ function generarGrid(productos) {
 
 generarGrid(carrito);
 
-
-
-
 carritoDiv.addEventListener('click', (event) => {
-  if (event.target.classList.contains('btn-danger')) {
-    const index = event.target.getAttribute('data-index');
+  const btn = event.target.closest('.btn-danger');
+  if (btn) {
+    const index = btn.getAttribute('data-index');
     const nuevoCarrito = carrito.filter((producto, i) => i !== Number(index));
     localStorage.setItem('carritos', JSON.stringify(nuevoCarrito));
     location.reload();
   }
 });
+
 
 /*
 // Obtener el array de carritos del localStorage

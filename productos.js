@@ -132,7 +132,7 @@ const carrito = `
 `;
 
 const carritoLleno = `
-<svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" fill="green" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
+<svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" fill="green" class="bi bi-cart-check-fill" viewBox="0 0 16 16">
   <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-1.646-7.646-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L8 8.293l2.646-2.647a.5.5 0 0 1 .708.708z"/>
 </svg>
 `;
@@ -203,10 +203,25 @@ function generarGrid(productos) {
         favoritos.push(producto);
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
         icon.innerHTML = heartIconFill;
+          Toastify({
+            text: "Agregado a favoritos",
+            duration: 1500,
+            style: {
+              background: "linear-gradient(to right, #00b09b, #96c93d)",
+            },
+          }).showToast();
+          
       } else if (producto && index !== -1) {
         favoritos.splice(index, 1);
         localStorage.setItem("favoritos", JSON.stringify(favoritos));
         icon.innerHTML = heartIcon;
+        Toastify({
+          text: "Quitado de favoritos",
+          duration: 1500,
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          },
+        }).showToast();
       }
     });
   });
@@ -229,14 +244,29 @@ function generarGrid(productos) {
         carritos.push(producto);
         localStorage.setItem("carritos", JSON.stringify(carritos));
         icon.innerHTML = carritoLleno;
+        Toastify({
+          text: "Agregado al carrito",
+          duration: 1500,
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          },
+        }).showToast();
       } else if (producto && index !== -1) {
         carritos.splice(index, 1);
         localStorage.setItem("carritos", JSON.stringify(carritos));
         icon.innerHTML = carrito;
+        Toastify({
+          text: "Quitado del carrito",
+          duration: 1500,
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          },
+        }).showToast();
       }
     });
   });
   
+
   
 }
 
@@ -246,3 +276,4 @@ rangePrecio.addEventListener('input', () => {
 
   
 filtrarProductos();
+

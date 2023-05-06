@@ -8,6 +8,9 @@
 body {
   overflow-y: scroll;
 }
+.product-form {
+  background-color: #ac9563;
+}
 
 
 /*   formulario   */
